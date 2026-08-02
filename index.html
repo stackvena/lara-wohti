@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#FAF6EE" />
     <title>Lara Wohti — Bridal Couture &amp; Luxury Formals | Pakistan's House of Timeless Elegance</title>
     <meta name="description"
         content="Lara Wohti is a Lahore-based couture house crafting hand-embroidered bridal wear, luxury formals and evening wear for the modern Pakistani bride. Book a private appointment." />
@@ -140,6 +141,173 @@
             outline-offset: 3px;
         }
 
+        section[id],
+        #top {
+            scroll-margin-top: 84px;
+        }
+
+        @media (max-width:1080px) {
+
+            section[id],
+            #top {
+                scroll-margin-top: 70px;
+            }
+        }
+
+        /* ---------- preloader ---------- */
+        html.is-loading {
+            overflow: hidden;
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--ivory);
+            transition: opacity .6s var(--ease), visibility .6s var(--ease);
+        }
+
+        .preloader::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 34px, rgba(173, 138, 70, 0.06) 35px),
+                repeating-linear-gradient(90deg, transparent, transparent 34px, rgba(173, 138, 70, 0.06) 35px);
+        }
+
+        .preloader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .preloader-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .preloader-mark {
+            position: relative;
+            width: 84px;
+            height: 84px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preloader-mark img {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+            opacity: 0;
+            animation: preloaderFade .8s var(--ease) .15s forwards;
+        }
+
+        .preloader-mark svg {
+            position: absolute;
+            inset: 0;
+            width: 84px;
+            height: 84px;
+            transform: rotate(-90deg);
+        }
+
+        .preloader-ring-track {
+            fill: none;
+            stroke: var(--line);
+            stroke-width: 1.4;
+        }
+
+        .preloader-ring {
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 1.4;
+            stroke-linecap: round;
+            stroke-dasharray: 236;
+            stroke-dashoffset: 236;
+            animation: preloaderRing 1.6s var(--ease) infinite;
+        }
+
+        @keyframes preloaderRing {
+            0% {
+                stroke-dashoffset: 236;
+                transform: rotate(0deg);
+            }
+
+            50% {
+                stroke-dashoffset: 70;
+                transform: rotate(160deg);
+            }
+
+            100% {
+                stroke-dashoffset: 236;
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes preloaderFade {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .preloader-word {
+            font-family: 'Fraunces', serif;
+            font-size: 15px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--charcoal);
+            opacity: 0;
+            animation: preloaderFade .8s var(--ease) .3s forwards;
+        }
+
+        .preloader-bar {
+            width: 130px;
+            height: 1px;
+            background: var(--line);
+            overflow: hidden;
+            opacity: 0;
+            animation: preloaderFade .8s var(--ease) .4s forwards;
+        }
+
+        .preloader-bar::after {
+            content: '';
+            display: block;
+            width: 40%;
+            height: 100%;
+            background: var(--gold);
+            animation: preloaderBar 1.3s ease-in-out infinite;
+        }
+
+        @keyframes preloaderBar {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            50% {
+                transform: translateX(150%);
+            }
+
+            100% {
+                transform: translateX(320%);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .preloader-ring,
+            .preloader-bar::after {
+                animation: none;
+            }
+        }
+
         /* ---------- eyebrow / labels ---------- */
         .eyebrow {
             font-family: 'Jost', sans-serif;
@@ -224,7 +392,7 @@
             left: 0;
             width: 100%;
             z-index: 200;
-            padding: 26px 6vw;
+            padding: calc(26px + env(safe-area-inset-top)) 6vw 26px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -233,7 +401,7 @@
         }
 
         .navbar.scrolled {
-            padding: 14px 6vw;
+            padding: calc(14px + env(safe-area-inset-top)) 6vw 14px;
             background: rgba(250, 246, 238, 0.82);
             backdrop-filter: blur(14px) saturate(140%);
             -webkit-backdrop-filter: blur(14px) saturate(140%);
@@ -357,6 +525,7 @@
             align-items: center;
             justify-content: center;
             gap: 30px;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
             transform: translateY(-100%);
             transition: transform .55s var(--ease);
         }
@@ -374,7 +543,7 @@
 
         .mobile-close {
             position: absolute;
-            top: 26px;
+            top: calc(26px + env(safe-area-inset-top));
             right: 6vw;
             color: var(--ivory);
         }
@@ -1397,6 +1566,8 @@
         }
 
         /* ---------- responsive ---------- */
+
+        /* Tablet / small laptop */
         @media (max-width:1080px) {
             .nav-links {
                 display: none;
@@ -1404,6 +1575,14 @@
 
             .nav-toggle {
                 display: flex;
+            }
+
+            .section-pad {
+                padding: 120px 0;
+            }
+
+            .section-head {
+                margin-bottom: 60px;
             }
 
             .collections-grid {
@@ -1422,7 +1601,8 @@
             }
 
             .product-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: 36px 24px;
             }
 
             .banner-collection {
@@ -1438,8 +1618,13 @@
                 direction: ltr;
             }
 
+            .banner-copy {
+                padding: 60px 7vw;
+            }
+
             .craft-grid {
                 grid-template-columns: 1fr;
+                gap: 56px;
             }
 
             .craft-media {
@@ -1447,19 +1632,20 @@
             }
 
             .gallery-grid {
-                columns: 2 200px;
+                columns: 3 220px;
             }
 
             .insta-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(4, 1fr);
             }
 
             .testi-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .store-grid {
                 grid-template-columns: 1fr;
+                gap: 44px;
             }
 
             .store-media {
@@ -1471,32 +1657,210 @@
             }
         }
 
-        @media (max-width:640px) {
+        /* Large phone / small tablet */
+        @media (max-width:760px) {
+            .container {
+                padding: 0 22px;
+            }
+
+            .navbar {
+                padding: calc(18px + env(safe-area-inset-top)) 20px 18px;
+            }
+
+            .navbar.scrolled {
+                padding: calc(12px + env(safe-area-inset-top)) 20px 12px;
+            }
+
+            .nav-logo img {
+                height: 42px;
+            }
+
+            .navbar.scrolled .nav-logo img {
+                height: 36px;
+            }
+
+            .nav-logo .word {
+                font-size: 16px;
+                letter-spacing: 0.1em;
+            }
+
+            .nav-icons {
+                gap: 14px;
+            }
+
             .section-pad {
-                padding: 86px 0;
+                padding: 88px 0;
             }
 
             .section-head {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 16px;
+                margin-bottom: 48px;
+            }
+
+            .section-head p {
+                max-width: 100%;
+            }
+
+            .center-head {
+                margin-bottom: 56px;
+            }
+
+            .hero-content {
+                margin-bottom: 9vh;
+                gap: 20px;
+            }
+
+            .hero p.lede {
+                max-width: 100%;
+                font-size: 15px;
             }
 
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 20px 14px;
+                gap: 24px 16px;
             }
 
             .collections-grid {
                 grid-template-columns: 1fr;
                 grid-template-rows: none;
-                gap: 16px;
+                gap: 14px;
             }
 
             .collection-card,
             .collection-card:first-child {
                 grid-column: auto;
                 grid-row: auto;
-                height: 380px;
+                height: 340px;
+            }
+
+            .banner-media {
+                min-height: 300px;
+            }
+
+            .banner-copy {
+                padding: 48px 22px;
+            }
+
+            .craft-stats {
+                gap: 32px;
+                margin-top: 34px;
+            }
+
+            .craft-stats .stat h3 {
+                font-size: 30px;
+            }
+
+            .craft-media-grid {
+                gap: 12px;
+            }
+
+            .gallery-grid {
+                columns: 2 160px;
+                column-gap: 12px;
+            }
+
+            .gallery-grid img,
+            .gallery-item {
+                margin-bottom: 12px;
+            }
+
+            .insta-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .insta-head {
+                margin-bottom: 32px;
+            }
+
+            .testi-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .testi-card {
+                padding: 32px 26px;
+            }
+
+            .appointment-inner {
+                padding: 100px 22px;
+            }
+
+            .store-list {
+                gap: 18px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 36px;
+                padding-bottom: 50px;
+            }
+
+            .footer-brand {
+                grid-column: span 2;
+            }
+
+            footer {
+                padding-top: 72px;
+            }
+        }
+
+        /* Phone */
+        @media (max-width:520px) {
+            .btn {
+                padding: 14px 24px;
+                font-size: 11px;
+                letter-spacing: 0.16em;
+            }
+
+            .hero {
+                min-height: 560px;
+            }
+
+            .hero h1 {
+                font-size: clamp(30px, 9.5vw, 44px);
+            }
+
+            .hero-eyebrow {
+                font-size: 10px;
+                letter-spacing: 0.28em;
+            }
+
+            .hero-ctas {
+                width: 100%;
+                gap: 12px;
+            }
+
+            .hero-ctas .btn {
+                flex: 1 1 auto;
+                justify-content: center;
+            }
+
+            .section-head h2,
+            .center-head h2 {
+                font-size: clamp(26px, 7.5vw, 36px);
+            }
+
+            .banner-copy h2 {
+                font-size: clamp(26px, 7.5vw, 36px);
+            }
+
+            .product-grid {
+                gap: 20px 12px;
+            }
+
+            .product-info h4 {
+                font-size: 16px;
+            }
+
+            .quick-view {
+                left: 12px;
+                right: 12px;
+                bottom: 12px;
+                padding: 11px;
+                font-size: 10px;
             }
 
             .insta-grid {
@@ -1507,23 +1871,160 @@
                 columns: 1;
             }
 
+            .craft-stats {
+                gap: 14px 28px;
+            }
+
+            .craft-media-grid .short {
+                aspect-ratio: 3/2;
+            }
+
+            .store-media {
+                min-height: 280px;
+            }
+
+            .map-placeholder {
+                height: 180px;
+            }
+
             .footer-grid {
                 grid-template-columns: 1fr;
-                gap: 44px;
+                gap: 40px;
+            }
+
+            .footer-brand {
+                grid-column: auto;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .newsletter-form input {
+                font-size: 13px;
+            }
+
+            .preloader-mark {
+                width: 68px;
+                height: 68px;
+            }
+
+            .preloader-mark svg {
+                width: 68px;
+                height: 68px;
+            }
+
+            .preloader-mark img {
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        /* Small phone */
+        @media (max-width:380px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .navbar {
+                padding: calc(16px + env(safe-area-inset-top)) 16px 16px;
+            }
+
+            .nav-logo .word {
+                display: none;
+            }
+
+            .nav-icons {
+                gap: 12px;
+            }
+
+            .nav-icons button:not(.nav-toggle):nth-child(1),
+            .nav-icons button:not(.nav-toggle):nth-child(2) {
+                display: none;
             }
 
             .hero h1 {
-                font-size: 14vw;
+                font-size: clamp(26px, 9vw, 36px);
             }
 
             .btn {
-                padding: 14px 26px;
+                padding: 13px 18px;
+                font-size: 10.5px;
+                letter-spacing: 0.12em;
+            }
+
+            .product-info h4 {
+                font-size: 15px;
+            }
+
+            .craft-stats .stat h3 {
+                font-size: 26px;
+            }
+        }
+
+        /* Short / landscape viewports (phones rotated, small laptops) */
+        @media (max-height:520px) and (orientation:landscape) {
+            .hero {
+                height: auto;
+                min-height: 100svh;
+                padding: 90px 0 40px;
+                align-items: center;
+            }
+
+            .hero-content {
+                margin-bottom: 0;
+            }
+
+            .mobile-menu {
+                justify-content: flex-start;
+                padding: 90px 0 40px;
+                overflow-y: auto;
+                gap: 18px;
+            }
+
+            .mobile-menu a {
+                font-size: 20px;
+            }
+        }
+
+        /* Touch targets & tap feedback */
+        @media (hover:none) {
+
+            .nav-icons button,
+            .nav-toggle,
+            .mobile-close {
+                min-width: 40px;
+                min-height: 40px;
+            }
+
+            .collection-card .cta-line,
+            .quick-view {
+                opacity: 1;
+                transform: none;
             }
         }
     </style>
 </head>
 
 <body>
+    <script>document.documentElement.classList.add('is-loading');</script>
+
+    <!-- ================= PRELOADER ================= -->
+    <div class="preloader" id="preloader" role="status" aria-live="polite" aria-label="Loading Lara Wohti">
+        <div class="preloader-inner">
+            <div class="preloader-mark">
+                <svg viewBox="0 0 84 84">
+                    <circle class="preloader-ring-track" cx="42" cy="42" r="37.5" />
+                    <circle class="preloader-ring" cx="42" cy="42" r="37.5" />
+                </svg>
+                <img src="logo.png" alt="" />
+            </div>
+            <p class="preloader-word">Lara Wohti</p>
+            <div class="preloader-bar"></div>
+        </div>
+    </div>
 
     <!-- ================= NAVBAR ================= -->
     <header class="navbar" id="navbar">
@@ -2323,6 +2824,44 @@
 
     <script>
         "use strict";
+
+        /* Preloader — hides once the hero image (and fonts) are ready,
+           with a minimum display time so it never just flashes, and a
+           hard timeout so a slow/broken asset never traps the user. */
+        (function () {
+            const MIN_VISIBLE_MS = 700;
+            const MAX_WAIT_MS = 2600;
+            const startedAt = Date.now();
+            const preloader = document.getElementById('preloader');
+            const heroImg = document.querySelector('.hero-media img');
+            let done = false;
+
+            function finish() {
+                if (done) return;
+                done = true;
+                const elapsed = Date.now() - startedAt;
+                const wait = Math.max(MIN_VISIBLE_MS - elapsed, 0);
+                setTimeout(() => {
+                    preloader.classList.add('is-hidden');
+                    document.documentElement.classList.remove('is-loading');
+                    preloader.addEventListener('transitionend', () => preloader.remove(), { once: true });
+                }, wait);
+            }
+
+            const heroReady = new Promise((resolve) => {
+                if (!heroImg) return resolve();
+                if (heroImg.complete && heroImg.naturalWidth > 0) return resolve();
+                heroImg.addEventListener('load', resolve, { once: true });
+                heroImg.addEventListener('error', resolve, { once: true });
+            });
+
+            const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready.catch(() => { }) : Promise.resolve();
+
+            Promise.race([
+                Promise.all([heroReady, fontsReady]),
+                new Promise((resolve) => setTimeout(resolve, MAX_WAIT_MS))
+            ]).then(finish);
+        })();
 
         /* Navbar scroll state */
         const navbar = document.getElementById('navbar');
